@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ci317Wifi</string>
+    <string name="app_name">Wifi</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="wifiInfo">Wi-fi</string>
+    <string name="wifiLists">Lista</string>
+    <string name="wifiSave">Conhecidos</string>
+    <string name="wifiName">Nome:</string>
+    <string name="wifiQuality">Qualidade:</string>
+    <string name="wifiSituation">Situação: </string>
+    <string name="wifiSpeed">Velocidade: </string>
+    <string name="wifiSecurity">Segurança: </string>
+    <string name="wifiAddress">Endereço: </string>
+    <string name="title_activity_lists">Lists</string>
+    <string name="title_activity_wifi_info">WifiInfo</string>
+    <string name="title_activity_list_save">ListSave</string>
 
 </resources>
