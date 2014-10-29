@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.text.NoCopySpan.Concrete;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;

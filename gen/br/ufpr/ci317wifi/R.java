@@ -27,18 +27,18 @@ public final class R {
     }
     public static final class id {
         public static final int action_settings=0x7f08000c;
-        public static final int wifiAddress=0x7f080007;
+        public static final int wifiAddress=0x7f080006;
+        public static final int wifiAddressResult=0x7f080007;
         public static final int wifiInfo=0x7f080008;
         public static final int wifiList=0x7f080000;
         public static final int wifiListSave=0x7f080001;
         public static final int wifiLists=0x7f08000a;
         public static final int wifiName=0x7f080002;
-        public static final int wifiQuality=0x7f080003;
+        public static final int wifiNameResult=0x7f080003;
         public static final int wifiRelative=0x7f080009;
         public static final int wifiSave=0x7f08000b;
-        public static final int wifiSecurity=0x7f080006;
-        public static final int wifiSituation=0x7f080004;
-        public static final int wifiSpeed=0x7f080005;
+        public static final int wifiSpeed=0x7f080004;
+        public static final int wifiSpeedResult=0x7f080005;
     }
     public static final class layout {
         public static final int activity_lists=0x7f030000;

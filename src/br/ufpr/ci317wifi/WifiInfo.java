@@ -1,16 +1,41 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class WifiInfo extends Activity {
+	
+	private TextView textViewName, textViewAddress, textViewSpeed;
+	private WifiManager wifiManager;
+	private android.net.wifi.WifiInfo wifiInfo;
+	private String wifiName, wifiAddress;
+	int wifiSpeed;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wifi_info);
+		
+		textViewName = (TextView) findViewById(R.id.wifiNameResult);
+		textViewSpeed = (TextView) findViewById(R.id.wifiSpeedResult);
+		textViewAddress = (TextView) findViewById(R.id.wifiAddressResult);		
+		
+		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		wifiInfo = wifiManager.getConnectionInfo();
+		wifiName = wifiInfo.getSSID();
+		wifiSpeed = wifiInfo.getLinkSpeed();
+		wifiAddress = wifiInfo.getBSSID();
+		
+		String wifiSpeedLink = String.valueOf(wifiSpeed);
+		
+		textViewName.setText(wifiName);
+		textViewSpeed.setText(wifiSpeedLink + " Mbps");
+		textViewAddress.setText(wifiAddress);
 	}
 
 	@Override

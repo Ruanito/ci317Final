@@ -13,41 +13,40 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiName"/>
-
+    
     <TextView
-        android:id="@+id/wifiQuality"
-        android:layout_below="@+id/wifiName"
+        android:id="@+id/wifiNameResult"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/wifiQuality" />
-
-    <TextView
-        android:id="@+id/wifiSituation"
-        android:layout_below="@+id/wifiQuality"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:text="@string/wifiSituation" />
+        android:layout_toRightOf="@+id/wifiName" />
 
     <TextView
         android:id="@+id/wifiSpeed"
-        android:layout_below="@+id/wifiSituation"
+        android:layout_below="@+id/wifiName"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiSpeed" />
-
+    
     <TextView
-        android:id="@+id/wifiSecurity"
-        android:layout_below="@+id/wifiSpeed"
+        android:id="@+id/wifiSpeedResult"
+        android:layout_below="@+id/wifiName"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="@string/wifiSecurity" />
+        android:layout_toRightOf="@+id/wifiSpeed" />
+
 
     <TextView
         android:id="@+id/wifiAddress"
-        android:layout_below="@+id/wifiSecurity"
+        android:layout_below="@+id/wifiSpeed"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiAddress" />
-
+    
+    <TextView
+        android:id="@+id/wifiAddressResult"
+        android:layout_below="@+id/wifiSpeed"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/wifiAddress" />
 
 </RelativeLayout>
