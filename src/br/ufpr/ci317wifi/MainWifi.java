@@ -2,19 +2,40 @@ package br.ufpr.ci317wifi;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 public class MainWifi extends Activity {
 
 	Intent intent;
+	int two = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_wifi);
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		
+		display.getSize(size);
+		
+		int width = size.x;
+		int height = size.y;
+		/*
+		Button buttonInfo = (Button) findViewById(R.id.wifiInfo);
+		Button buttonList = (Button) findViewById(R.id.wifiList);
+		Button buttonSave = (Button) findViewById(R.id.wifiListSave);
+		
+		buttonInfo.getLayoutParams().width = (width);
+		buttonList.getLayoutParams().width = (width / two);
+		buttonSave.getLayoutParams().width = (width / two);
+		*/
 	}
 
 	@Override
