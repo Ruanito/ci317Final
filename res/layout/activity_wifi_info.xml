@@ -48,5 +48,19 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/wifiAddress" />
+    
+    <TextView
+        android:id="@+id/wifiStrength"
+        android:layout_below="@+id/wifiAddress"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/wifiStrength" />
+    
+    <TextView
+        android:id="@+id/wifiStrengthResult"
+        android:layout_below="@+id/wifiAddress"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/wifiStrength" />
 
 </RelativeLayout>

@@ -13,6 +13,7 @@
     <string name="wifiSpeed">Velocidade: </string>
     <string name="wifiSecurity">Segurança: </string>
     <string name="wifiAddress">Endereço: </string>
+    <string name="wifiStrength">Força: </string>
     <string name="title_activity_lists">Lists</string>
     <string name="title_activity_wifi_info">WifiInfo</string>
     <string name="title_activity_list_save">ListSave</string>

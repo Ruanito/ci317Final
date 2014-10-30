@@ -10,11 +10,11 @@ import android.widget.TextView;
 
 public class WifiInfo extends Activity {
 	
-	private TextView textViewName, textViewAddress, textViewSpeed;
+	private TextView textViewName, textViewAddress, textViewSpeed, textViewStrength;
 	private WifiManager wifiManager;
 	private android.net.wifi.WifiInfo wifiInfo;
 	private String wifiName, wifiAddress;
-	int wifiSpeed;
+	int wifiSpeed, wifiStrength;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,19 +23,23 @@ public class WifiInfo extends Activity {
 		
 		textViewName = (TextView) findViewById(R.id.wifiNameResult);
 		textViewSpeed = (TextView) findViewById(R.id.wifiSpeedResult);
-		textViewAddress = (TextView) findViewById(R.id.wifiAddressResult);		
+		textViewAddress = (TextView) findViewById(R.id.wifiAddressResult);	
+		textViewStrength = (TextView) findViewById(R.id.wifiStrengthResult);
 		
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		wifiInfo = wifiManager.getConnectionInfo();
 		wifiName = wifiInfo.getSSID();
 		wifiSpeed = wifiInfo.getLinkSpeed();
 		wifiAddress = wifiInfo.getBSSID();
+		wifiStrength = wifiInfo.getRssi();
 		
 		String wifiSpeedLink = String.valueOf(wifiSpeed);
+		String wifiStrengthLink = String.valueOf(wifiStrength);
 		
 		textViewName.setText(wifiName);
 		textViewSpeed.setText(wifiSpeedLink + " Mbps");
 		textViewAddress.setText(wifiAddress);
+		textViewStrength.setText(wifiStrengthLink);
 	}
 
 	@Override
