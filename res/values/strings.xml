@@ -20,7 +20,7 @@
     <string name="title_activity_list_save">ListSave</string>
     <string name="title_activity_lists__save">Lists_Save</string>
     <string name="title_activity_settings">Settings</string>
-    <string name="wifiSettingTime">Tempo de espera em minutos: </string>
+    <string name="wifiSettingTime">Tempo para trocar de wi-fi em minutos: </string>
     <string name="wifiTimeHint">1</string>
     <string name="title_activity_info">Info</string>
     <string name="appInfo">Aplicativo desenvolvido por Alessandro Elias e Ruanito Diego Santos para a disciplina de Tópicos em Sistemas Operacionais, ministrada pelo professor Eduardo Todt.</string>
