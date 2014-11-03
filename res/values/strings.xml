@@ -23,5 +23,6 @@
     <string name="wifiSettingTime">Tempo de espera em minutos: </string>
     <string name="wifiTimeHint">1</string>
     <string name="title_activity_info">Info</string>
+    <string name="appInfo">Aplicativo desenvolvido por Alessandro Elias e Ruanito Diego Santos para a disciplina de Tópicos em Sistemas Operacionais, ministrada pelo professor Eduardo Todt.</string>
 
 </resources>
