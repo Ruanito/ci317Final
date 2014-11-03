@@ -3,7 +3,8 @@
 
     <string name="app_name">Wifi</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_info">Sobre</string>
     <string name="wifiInfo">Wi-fi</string>
     <string name="wifiLists">Lista</string>
     <string name="wifiSave">Conhecidos</string>
@@ -18,5 +19,9 @@
     <string name="title_activity_wifi_info">WifiInfo</string>
     <string name="title_activity_list_save">ListSave</string>
     <string name="title_activity_lists__save">Lists_Save</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="wifiSettingTime">Tempo de espera em minutos: </string>
+    <string name="wifiTimeHint">1</string>
+    <string name="title_activity_info">Info</string>
 
 </resources>

@@ -19,23 +19,6 @@ public class MainWifi extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_wifi);
-		
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		
-		display.getSize(size);
-		
-		int width = size.x;
-		int height = size.y;
-		/*
-		Button buttonInfo = (Button) findViewById(R.id.wifiInfo);
-		Button buttonList = (Button) findViewById(R.id.wifiList);
-		Button buttonSave = (Button) findViewById(R.id.wifiListSave);
-		
-		buttonInfo.getLayoutParams().width = (width);
-		buttonList.getLayoutParams().width = (width / two);
-		buttonSave.getLayoutParams().width = (width / two);
-		*/
 	}
 
 	@Override
@@ -52,6 +35,14 @@ public class MainWifi extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			intent = new Intent(this, Settings.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
+			return true;
+		} else if (id == R.id.action_info) {
+			intent = new Intent(this, Info.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
