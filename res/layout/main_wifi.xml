@@ -26,7 +26,7 @@
 		        android:layout_height="300sp"
 		        android:text="@string/wifiInfo"
 		        android:layout_centerHorizontal="true"
-		        android:drawableTop="@drawable/hero_airport_wifi"
+		        android:drawableTop="@drawable/wifi_logo"
 		        android:onClick="wifiInfo" />
 	        
 	        <Button
