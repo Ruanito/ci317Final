@@ -23,10 +23,10 @@
 	   		<Button
 		        android:id="@+id/wifiInfo"
 		        android:layout_width="match_parent"
-		        android:layout_height="150dp"
+		        android:layout_height="125dp"
 		        android:text="@string/wifiInfo"
 		        android:layout_centerHorizontal="true"
-		        android:drawableTop="@drawable/wifi_logo"
+		        android:drawableTop="@drawable/ic_device_signal_wifi_4_bar"
 		        android:onClick="wifiInfo" />
 	        
 	        <Button
