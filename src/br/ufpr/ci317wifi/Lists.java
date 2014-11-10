@@ -84,7 +84,7 @@ public class Lists extends Activity {
 			
 			for (int i = 0; i < wifiScanList.size(); i++) {
 				String value = String.valueOf(wifiScanList.get(i).level);
-				wifis[i] = "SSID: " + wifiScanList.get(i).SSID + "\n" + ((wifiScanList.get(i)).toString() + "\nLevel: " + value);
+				wifis[i] = "Nome: " + wifiScanList.get(i).SSID + "\nQualidade: " + value;
 			}
 			
 			Log.d("DBG", "red = " + wifis[0]);

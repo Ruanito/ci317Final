@@ -18,7 +18,15 @@
     </style>
     
     <style name="wifiList">
-        <item name="android:background">#ffffff</item>
+        <item name="android:background">#000000</item>
+    </style>
+    
+    <style name="list">
+        <item name="android:background">#000000</item>
+    </style>
+    
+    <style name="title">
+        <item name="android:textColor">#ffffff</item>
     </style>
 
 </resources>
