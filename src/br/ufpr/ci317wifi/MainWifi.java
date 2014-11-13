@@ -1,17 +1,19 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.view.Display;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 
 public class MainWifi extends Activity {
-
+	private final int TIME = 60;			// Time in seconds
+	
 	Intent intent;
 	int two = 2;
 	
@@ -19,8 +21,17 @@ public class MainWifi extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_wifi);
+		CreateService();
 	}
 
+	private void CreateService() {
+		Context context = getApplicationContext();
+		AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+		Intent intent = new Intent(context, WifiService.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+		alarmManager.setRepeating(AlarmManager.RTC, SystemClock.elapsedRealtime(), 1000*TIME, pendingIntent);
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

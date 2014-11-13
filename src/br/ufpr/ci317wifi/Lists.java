@@ -63,17 +63,17 @@ public class Lists extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	protected void onPouse () {
+	protected void onPause () {
 		unregisterReceiver(wifiScanReceiver);
-		Log.d("DBG", "onPouse");
+		Log.d("DBG", "onPause");
 		super.onPause();
 	}
 	
 	@SuppressWarnings("static-access")
 	protected void onResume () {
+		super.onResume();
 		registerReceiver(wifiScanReceiver, new IntentFilter(wifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 		Log.d("DBG", "onResume");
-		super.onResume();
 	}
 	
 	class WifiScanReceiver extends BroadcastReceiver {

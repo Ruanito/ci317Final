@@ -49,6 +49,8 @@
             android:name=".Info"
             android:label="@string/title_activity_info" >
         </activity>
+        
+        <receiver android:name=".WifiService" />
     </application>
 
 </manifest>
