@@ -13,14 +13,14 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiName"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/wifiNameResult"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/wifiName"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/wifiSpeed"
@@ -28,7 +28,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiSpeed"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/wifiSpeedResult"
@@ -36,7 +36,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/wifiSpeed"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
 
     <TextView
@@ -45,7 +45,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiAddress"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/wifiAddressResult"
@@ -53,7 +53,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/wifiAddress"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/wifiStrength"
@@ -61,7 +61,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="@string/wifiStrength"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
     
     <TextView
         android:id="@+id/wifiStrengthResult"
@@ -69,6 +69,6 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/wifiStrength"
-        android:textSize="25dp" />
+        android:textSize="20dp" />
 
 </RelativeLayout>
