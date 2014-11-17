@@ -28,20 +28,22 @@ public class Lists_Save extends Activity {
 	@Override
 	public void onResume(){
 		List<WifiConfiguration> wConfigs = wifiManager.getConfiguredNetworks();
-		String[] ssids = new String[wConfigs.size()];
-		
-		int i = 0;
-		for( WifiConfiguration wc : wConfigs ) {
-		   /*
-    		* WARNING: this is a workaround since getConfiguredNetworks()
-    		*          fill up the name in double quotes.
-    		*/
-			ssids[i++] = wc.SSID.replaceAll("\"", "");
+		if( wConfigs != null ) {
+			String[] ssids = new String[wConfigs.size()];
+			
+			int i = 0;
+			for( WifiConfiguration wc : wConfigs ) {
+			   /*
+	    		* WARNING: this is a workaround since getConfiguredNetworks()
+	    		*          fill up the name in double quotes.
+	    		*/
+				ssids[i++] = wc.SSID.replaceAll("\"", "");
+			}
+			
+			ListView lv = (ListView)findViewById(R.id.wifiListSave);
+			lv.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ssids));
 		}
-		
-		ListView lv = (ListView)findViewById(R.id.wifiListSave);
-		lv.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, ssids));
-		
+
 		super.onResume();
 	}
 	
