@@ -69,10 +69,9 @@ public class Lists extends Activity {
 		super.onPause();
 	}
 	
-	@SuppressWarnings("static-access")
 	protected void onResume () {
 		super.onResume();
-		registerReceiver(wifiScanReceiver, new IntentFilter(wifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+		registerReceiver(wifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 		Log.d("DBG", "onResume");
 	}
 	
@@ -86,8 +85,6 @@ public class Lists extends Activity {
 				String value = String.valueOf(wifiScanList.get(i).level);
 				wifis[i] = "Nome: " + wifiScanList.get(i).SSID + "\nQualidade: " + value;
 			}
-			
-			Log.d("DBG", "red = " + wifis[0]);
 			
 			listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, wifis));
 		}

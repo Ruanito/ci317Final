@@ -8,9 +8,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
+import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 public class WifiDiscoverService extends Service {
 	private WifiDiscoverReceiver wifiDiscoverReceiver;
@@ -44,21 +46,13 @@ public class WifiDiscoverService extends Service {
 	
 	private Runnable runThread = new Runnable() {
 		public void run() {
-			Log.d("dbg", String.valueOf(this.hashCode()));
+			//Log.d("dbg", String.valueOf(this.hashCode()));
+			
 			Context context = getApplicationContext();
 			wifiDiscoverReceiver = new WifiDiscoverReceiver();
 			wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
 			context.registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
-			/*
-			for( int i = 0; i < 10; i++ ) {
-				try {
-					Thread.sleep(1000);
-			        Log.i("dbg", i + " DEU");
-				} catch( Exception e ) {
-					e.getLocalizedMessage();
-				}
-			}*/
 			stopSelf();
 		}
 	};
@@ -66,10 +60,10 @@ public class WifiDiscoverService extends Service {
     class WifiDiscoverReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Log.d("dbg", "WifiDiscoverReceiver=" + String.valueOf(this.hashCode()));
-    
+        	//Log.d("dbg", String.valueOf(this.hashCode()));
             List<ScanResult> wifiList = wifiManager.getScanResults();
             ScanResult bestSignal, next;
+            int netId;
     
             if( wifiList.size() > 0 ) { 
                 bestSignal = wifiList.get(0);
@@ -77,10 +71,35 @@ public class WifiDiscoverService extends Service {
                     next = wifiList.get(i);
                     if( WifiManager.compareSignalLevel(bestSignal.level, next.level) < 0 ) 
                         bestSignal = next;
-                }   
-    
+                }
                 Log.d("dbg", "ssid: " + bestSignal.SSID + ", signal: " + bestSignal.level);
-            }   
-        }   
+                
+                netId = getNetworkId(bestSignal.SSID);
+                Log.d("dbg", "netId = " + String.valueOf(netId));
+                if( netId == -1 )
+                	Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' nao salvo.", Toast.LENGTH_SHORT).show();
+                else
+                	wifiManager.enableNetwork(netId, true);			// connect to the network with best signal.
+            }
+        }
+    }
+    
+    public int getNetworkId(String ssid) {
+    	List<WifiConfiguration> wifisConfig = wifiManager.getConfiguredNetworks();
+    	WifiConfiguration wc;
+    	String curSSID;
+    	int ret = -1;
+    	    	
+    	for( int i = 0; i < wifisConfig.size() && ret == -1; i++) {
+    		wc = wifisConfig.get(i);
+    		/*
+    		 * WARNING: this is a workaround since getConfiguredNetworks()
+    		 *          fill up the name in double quotes.
+    		 */
+    		curSSID = wc.SSID.replaceAll("\"", "");
+    		if( curSSID != null && curSSID.equalsIgnoreCase(ssid) ) ret = wc.networkId;
+    	}
+    	
+    	return ret;
     }
 }
