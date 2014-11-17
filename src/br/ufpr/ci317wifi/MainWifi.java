@@ -1,27 +1,29 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 public class MainWifi extends Activity {
-	
 	Intent intent;
-	int two = 2;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_wifi);
-		CreateService();
+		setContentView(R.layout.main_wifi);		
+		CreateService();		
 	}
-
+	
 	private void CreateService() {
 		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);
-		startService(serviceIntent);
+		startService(serviceIntent);		
 	}
 	
 	@Override

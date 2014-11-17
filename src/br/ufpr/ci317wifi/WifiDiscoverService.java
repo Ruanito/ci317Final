@@ -1,6 +1,8 @@
 package br.ufpr.ci317wifi;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -12,15 +14,17 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 public class WifiDiscoverService extends Service {
-	private WifiDiscoverReceiver wifiDiscoverReceiver;
-	private WifiManager wifiManager;
+	private final int TIMER_TRIGGER = 1;		// time in minutes
+	private Context context = null;
+	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
+	private WifiManager wifiManager = null;
 	
 	@Override
 	public void onCreate() {
-		super.onCreate();
+		super.onCreate();		
+		updateTimer = new Timer("wifidiscover");
 	}
 	
 	@Override
@@ -28,11 +32,12 @@ public class WifiDiscoverService extends Service {
 		return null;
 	}
 	
+	private Timer updateTimer;
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Thread thread = new Thread(null, runThread);
-	    thread.start();
-	        
+		updateTimer.cancel();
+		updateTimer = new Timer("wifidiscover");
+		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*60*1000);
 		/*
 		 * START_NOT_STICK - Expects service to call stopSelf().
 		 *                   Note this type of return will set
@@ -41,26 +46,28 @@ public class WifiDiscoverService extends Service {
 		 * This avoid to force android restart the service in the moment
 		 * where there is a contention of resources.
 		 */
-	    return Service.START_NOT_STICKY;
+	    return Service.START_STICKY;
 	}
 	
-	private Runnable runThread = new Runnable() {
+	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			//Log.d("dbg", String.valueOf(this.hashCode()));
+			Log.d("dbg", "wifidiscover " + String.valueOf(this.hashCode()));
+			context = getApplicationContext();
+			if( wifiManager == null )
+				wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
+			if( wifiDiscoverReceiver == null )
+				wifiDiscoverReceiver = new WifiDiscoverReceiver();
 			
-			Context context = getApplicationContext();
-			wifiDiscoverReceiver = new WifiDiscoverReceiver();
-			wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
-			context.registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+			context.registerReceiver(wifiDiscoverReceiver,
+					new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
-			stopSelf();
 		}
 	};
-	
+		
     class WifiDiscoverReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-        	//Log.d("dbg", String.valueOf(this.hashCode()));
+        	Log.d("dbg", "WifiDiscoverReceiver " + String.valueOf(this.hashCode()));
             List<ScanResult> wifiList = wifiManager.getScanResults();
             ScanResult bestSignal, next;
             int netId;
@@ -77,7 +84,8 @@ public class WifiDiscoverService extends Service {
                 netId = getNetworkId(bestSignal.SSID);
                 Log.d("dbg", "netId = " + String.valueOf(netId));
                 if( netId == -1 )
-                	Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' nao salvo.", Toast.LENGTH_SHORT).show();
+                	//Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' nao salvo.", Toast.LENGTH_SHORT).show();
+                	Log.d("dbg", "Wifi '" + bestSignal.SSID + "' nao salvo.");
                 else
                 	wifiManager.enableNetwork(netId, true);			// connect to the network with best signal.
             }

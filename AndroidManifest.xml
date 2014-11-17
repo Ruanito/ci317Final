@@ -52,6 +52,7 @@
         </activity>
 
         <service android:enabled="true" android:name=".WifiDiscoverService" />
+        <receiver android:name=".TriggerReceiver" />
     </application>
 
 </manifest>
