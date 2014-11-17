@@ -1,18 +1,13 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 public class MainWifi extends Activity {
-	private final int TIME = 60;			// Time in seconds
 	
 	Intent intent;
 	int two = 2;
@@ -25,11 +20,8 @@ public class MainWifi extends Activity {
 	}
 
 	private void CreateService() {
-		Context context = getApplicationContext();
-		AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-		Intent intent = new Intent(context, WifiService.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-		alarmManager.setRepeating(AlarmManager.RTC, SystemClock.elapsedRealtime(), 1000*TIME, pendingIntent);
+		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);
+		startService(serviceIntent);
 	}
 	
 	@Override
