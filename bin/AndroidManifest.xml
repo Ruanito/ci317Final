@@ -6,7 +6,7 @@
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="20" android:maxSdkVersion="21"/>
+        android:targetSdkVersion="20" />
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -49,8 +49,6 @@
             android:name=".Info"
             android:label="@string/title_activity_info" >
         </activity>
-
-        <service android:enabled="true" android:name=".WifiDiscoverService" />
     </application>
 
 </manifest>
