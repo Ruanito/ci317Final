@@ -1092,11 +1092,11 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f090023;
         public static final int action_bar_title=0x7f090022;
         public static final int action_context_bar=0x7f09001d;
-        public static final int action_info=0x7f09004f;
+        public static final int action_info=0x7f090050;
         public static final int action_menu_divider=0x7f090002;
         public static final int action_menu_presenter=0x7f090003;
         public static final int action_mode_close_button=0x7f090024;
-        public static final int action_settings=0x7f09004e;
+        public static final int action_settings=0x7f09004f;
         public static final int activity_chooser_view_content=0x7f090025;
         public static final int always=0x7f09000f;
         public static final int appInfo=0x7f09003c;
@@ -1125,7 +1125,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f090004;
         public static final int progress_horizontal=0x7f090005;
         public static final int radio=0x7f09002f;
-        public static final int scrollView=0x7f090049;
+        public static final int scrollView=0x7f09004a;
         public static final int search_badge=0x7f090032;
         public static final int search_bar=0x7f090031;
         public static final int search_button=0x7f090033;
@@ -1143,26 +1143,27 @@ containing a value of this type.
         public static final int split_action_bar=0x7f09001e;
         public static final int submit_area=0x7f090039;
         public static final int tabMode=0x7f090008;
+        public static final int textView1=0x7f09003e;
         public static final int title=0x7f09002b;
         public static final int top_action_bar=0x7f090020;
         public static final int up=0x7f090021;
         public static final int useLogo=0x7f09000e;
-        public static final int wifiAddress=0x7f090045;
-        public static final int wifiAddressResult=0x7f090046;
-        public static final int wifiInfo=0x7f09004b;
+        public static final int wifiAddress=0x7f090046;
+        public static final int wifiAddressResult=0x7f090047;
+        public static final int wifiInfo=0x7f09004c;
         public static final int wifiList=0x7f09003d;
-        public static final int wifiListSave=0x7f09003e;
-        public static final int wifiLists=0x7f09004c;
-        public static final int wifiName=0x7f090041;
-        public static final int wifiNameResult=0x7f090042;
-        public static final int wifiRelative=0x7f09004a;
-        public static final int wifiSave=0x7f09004d;
-        public static final int wifiSettingTime=0x7f09003f;
-        public static final int wifiSpeed=0x7f090043;
-        public static final int wifiSpeedResult=0x7f090044;
-        public static final int wifiStrength=0x7f090047;
-        public static final int wifiStrengthResult=0x7f090048;
-        public static final int wifiTime=0x7f090040;
+        public static final int wifiListSave=0x7f09003f;
+        public static final int wifiLists=0x7f09004d;
+        public static final int wifiName=0x7f090042;
+        public static final int wifiNameResult=0x7f090043;
+        public static final int wifiRelative=0x7f09004b;
+        public static final int wifiSave=0x7f09004e;
+        public static final int wifiSettingTime=0x7f090040;
+        public static final int wifiSpeed=0x7f090044;
+        public static final int wifiSpeedResult=0x7f090045;
+        public static final int wifiStrength=0x7f090048;
+        public static final int wifiStrengthResult=0x7f090049;
+        public static final int wifiTime=0x7f090041;
         public static final int withText=0x7f090013;
     }
     public static final class integer {
@@ -1232,6 +1233,7 @@ containing a value of this type.
         public static final int wifi_info=0x7f0c0005;
     }
     public static final class string {
+        public static final int KownWifis=0x7f0a0025;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abc_action_bar_home_description=0x7f0a0001;
