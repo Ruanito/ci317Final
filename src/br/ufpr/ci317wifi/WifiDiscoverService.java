@@ -11,23 +11,28 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 public class WifiDiscoverService extends Service {
+	private final int THRESHOLD_SIGNAL = 10; 
 	private final int TIMER_TRIGGER = 1;		// time in minutes
-	private Context context = null;
-	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
 	private WifiManager wifiManager = null;
+	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
 	
 	@Override
 	public void onCreate() {
-		super.onCreate();		
-		updateTimer = new Timer("wifidiscover");
+		Log.d("dbg", "WifiDiscoverService.onCreate threadId=" + String.valueOf(Thread.currentThread().getId()));
+		
+		wifiDiscoverReceiver = new WifiDiscoverReceiver();
+		wifiManager = (WifiManager)getSystemService(Service.WIFI_SERVICE);
+		super.onCreate();
 	}
 	
 	@Override
@@ -35,27 +40,27 @@ public class WifiDiscoverService extends Service {
 		return null;
 	}
 	
-	private Timer updateTimer;
+	/*
+	 * updateTimer - used as a flag, to indicate if we are running
+	 * the service already or not.
+	 */
+	private Timer updateTimer = null;
 	private Handler handler;
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.d("dbg", "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
-		updateTimer.cancel();
-		updateTimer = new Timer("wifidiscover");
-		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*8*1000);
 		
-		context = getApplicationContext();
-		if( wifiManager == null )
-			wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
-		if( wifiDiscoverReceiver == null )
-			wifiDiscoverReceiver = new WifiDiscoverReceiver();
+		if( updateTimer != null ) return Service.START_STICKY;
 		
-		HandlerThread ht = new HandlerThread("mythread");
+		HandlerThread ht = new HandlerThread("wifiScan");
 		ht.start();
 		Looper looper = ht.getLooper();
 		handler = new Handler(looper);
-		context.registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
+		registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
+			
+		updateTimer = new Timer("wifidiscover");
+		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*30*1000);		
 		
 		/*
 		 * START_NOT_STICK - Expects service to call stopSelf().
@@ -79,26 +84,52 @@ public class WifiDiscoverService extends Service {
         @Override
         public void onReceive(Context context, Intent intent) {
 			Log.d("dbg", "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
-            List<ScanResult> wifiList = wifiManager.getScanResults();
+            List<ScanResult> wifiList;
+            WifiInfo connected;
             ScanResult bestSignal, next;
             int netId;
+            int diff;
     
-            if( wifiList.size() > 0 ) { 
-                bestSignal = wifiList.get(0);
-                for( int i = 1; i < wifiList.size(); i++ ) { 
-                    next = wifiList.get(i);
-                    if( WifiManager.compareSignalLevel(bestSignal.level, next.level) < 0 ) 
-                        bestSignal = next;
-                }
-                Log.d("dbg", "ssid: " + bestSignal.SSID + ", signal: " + bestSignal.level);
-                
-                netId = getNetworkId(bestSignal.SSID);
-                Log.d("dbg", "netId = " + String.valueOf(netId));
-                if( netId == -1 )
-                	//Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' nao salvo.", Toast.LENGTH_SHORT).show();
-                	Log.d("dbg", "Wifi '" + bestSignal.SSID + "' nao salvo.");
-                else
-                	wifiManager.enableNetwork(netId, true);			// connect to the network with best signal.
+            if( wifiManager.isWifiEnabled() ) {
+	            wifiList = wifiManager.getScanResults();
+	            if( wifiList.size() > 0 ) { 
+	                bestSignal = wifiList.get(0);
+	                for( int i = 1; i < wifiList.size(); i++ ) { 
+	                    next = wifiList.get(i);
+	                    if( WifiManager.compareSignalLevel(next.level, bestSignal.level) > 0 )
+	                        bestSignal = next;
+	                }
+	                connected = wifiManager.getConnectionInfo();
+	                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
+	                
+	                Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
+	                		"; diff=" + String.valueOf(diff));
+	                
+	                Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
+	                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();
+	                
+	                /*
+	                 * Connect to a network only if 
+	                 */
+	                if( (WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) &&
+	                	(!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
+	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) ) {
+	                	
+		                netId = getNetworkId(bestSignal.SSID);
+		                Log.d("dbg", "netId = " + String.valueOf(netId));
+		                if( netId == -1 ) {
+		                	//Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' not saved.", Toast.LENGTH_SHORT).show();
+		                	Log.d("dbg", "Wifi '" + bestSignal.SSID + "' not saved.");
+		                }else {
+		                	// connect to the network with the best signal.
+		                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
+		                	Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
+		                	wifiManager.enableNetwork(netId, true);
+		                }
+	                }
+	            }
             }
         }
     }

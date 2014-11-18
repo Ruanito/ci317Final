@@ -14,14 +14,16 @@ public class MainWifi extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.main_wifi);		
-		CreateService();		
+		setContentView(R.layout.main_wifi);
+		
+		CreateService();
 	}
 	
 	private void CreateService() {
 		Log.d("dbg", "MainWifi.CreateService ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);
-		startService(serviceIntent);		
+		startService(serviceIntent);
+		
 	}
 	
 	@Override
