@@ -12,7 +12,10 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
 
 public class WifiDiscoverService extends Service {
@@ -33,11 +36,27 @@ public class WifiDiscoverService extends Service {
 	}
 	
 	private Timer updateTimer;
+	private Handler handler;
+	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.d("dbg", "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		updateTimer.cancel();
 		updateTimer = new Timer("wifidiscover");
-		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*60*1000);
+		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*8*1000);
+		
+		context = getApplicationContext();
+		if( wifiManager == null )
+			wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
+		if( wifiDiscoverReceiver == null )
+			wifiDiscoverReceiver = new WifiDiscoverReceiver();
+		
+		HandlerThread ht = new HandlerThread("mythread");
+		ht.start();
+		Looper looper = ht.getLooper();
+		handler = new Handler(looper);
+		context.registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
+		
 		/*
 		 * START_NOT_STICK - Expects service to call stopSelf().
 		 *                   Note this type of return will set
@@ -51,15 +70,7 @@ public class WifiDiscoverService extends Service {
 	
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			Log.d("dbg", "wifidiscover " + String.valueOf(this.hashCode()));
-			context = getApplicationContext();
-			if( wifiManager == null )
-				wifiManager = (WifiManager)context.getSystemService(Service.WIFI_SERVICE);
-			if( wifiDiscoverReceiver == null )
-				wifiDiscoverReceiver = new WifiDiscoverReceiver();
-			
-			context.registerReceiver(wifiDiscoverReceiver,
-					new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+			Log.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			wifiManager.startScan();
 		}
 	};
@@ -67,7 +78,7 @@ public class WifiDiscoverService extends Service {
     class WifiDiscoverReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-        	Log.d("dbg", "WifiDiscoverReceiver " + String.valueOf(this.hashCode()));
+			Log.d("dbg", "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
             List<ScanResult> wifiList = wifiManager.getScanResults();
             ScanResult bestSignal, next;
             int netId;

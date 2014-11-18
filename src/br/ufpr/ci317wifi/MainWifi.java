@@ -1,12 +1,9 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +19,7 @@ public class MainWifi extends Activity {
 	}
 	
 	private void CreateService() {
+		Log.d("dbg", "MainWifi.CreateService ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);
 		startService(serviceIntent);		
 	}
