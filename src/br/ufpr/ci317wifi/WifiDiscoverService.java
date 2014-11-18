@@ -28,7 +28,7 @@ public class WifiDiscoverService extends Service {
 	
 	@Override
 	public void onCreate() {
-		Log.d("dbg", "WifiDiscoverService.onCreate threadId=" + String.valueOf(Thread.currentThread().getId()));
+		// Lod.d("dbg", "WifiDiscoverService.onCreate threadId=" + String.valueOf(Thread.currentThread().getId()));
 		
 		wifiDiscoverReceiver = new WifiDiscoverReceiver();
 		wifiManager = (WifiManager)getSystemService(Service.WIFI_SERVICE);
@@ -49,7 +49,7 @@ public class WifiDiscoverService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		Log.d("dbg", "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
+		// Lod.d("dbg", "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		
 		if( updateTimer != null ) return Service.START_STICKY;
 		
@@ -60,7 +60,7 @@ public class WifiDiscoverService extends Service {
 		registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
 			
 		updateTimer = new Timer("wifidiscover");
-		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*30*1000);		
+		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*60*1000);		
 		
 		/*
 		 * START_NOT_STICK - Expects service to call stopSelf().
@@ -75,7 +75,7 @@ public class WifiDiscoverService extends Service {
 	
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			Log.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			// Lod.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			wifiManager.startScan();
 		}
 	};
@@ -83,53 +83,56 @@ public class WifiDiscoverService extends Service {
     class WifiDiscoverReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-			Log.d("dbg", "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			// Lod.d("dbg", "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
             List<ScanResult> wifiList;
             WifiInfo connected;
             ScanResult bestSignal, next;
-            int netId;
+            int netId = -1;
             int diff;
     
-            if( wifiManager.isWifiEnabled() ) {
-	            wifiList = wifiManager.getScanResults();
-	            if( wifiList.size() > 0 ) { 
-	                bestSignal = wifiList.get(0);
-	                for( int i = 1; i < wifiList.size(); i++ ) { 
-	                    next = wifiList.get(i);
-	                    if( WifiManager.compareSignalLevel(next.level, bestSignal.level) > 0 )
-	                        bestSignal = next;
-	                }
+            if( !wifiManager.isWifiEnabled() )
+            	return;
+            
+            wifiList = wifiManager.getScanResults();
+            if( wifiList.size() > 0 ) { 
+                bestSignal = wifiList.get(0);
+                for( int i = 1; i < wifiList.size(); i++ ) { 
+                    next = wifiList.get(i);
+                    if( WifiManager.compareSignalLevel(next.level, bestSignal.level) > 0 ) {
+                    	if( (netId = getNetworkId(next.SSID)) != -1 ) 
+                    		bestSignal = next;
+                    }
+                }
+                
+                if( netId != -1 ) {
+                	// Lod.d("dbg", "netId = " + String.valueOf(netId));
 	                connected = wifiManager.getConnectionInfo();
 	                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
 	                
-	                Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
-	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
-	                		"; diff=" + String.valueOf(diff));
+	                /* Lod.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
+	                		"; diff=" + String.valueOf(diff));*/
 	                
-	                Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                /* Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
 	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
-	                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();
+	                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();*/
 	                
 	                /*
-	                 * Connect to a network only if 
+	                 * Connect to a network only if:
+	                 * 	1 - If ssid are not the same, with diferent ap.
+	                 * 	2 - Best signal has bigger diference than THRESHOLD_SIGNAL 
 	                 */
-	                if( (WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) &&
-	                	(!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
-	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) ) {
+	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
+	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
+	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) ) {
 	                	
-		                netId = getNetworkId(bestSignal.SSID);
-		                Log.d("dbg", "netId = " + String.valueOf(netId));
-		                if( netId == -1 ) {
-		                	//Toast.makeText(context, "Wifi '" + bestSignal.SSID + "' not saved.", Toast.LENGTH_SHORT).show();
-		                	Log.d("dbg", "Wifi '" + bestSignal.SSID + "' not saved.");
-		                }else {
+		                
+		                	// Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
+		                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
 		                	// connect to the network with the best signal.
-		                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
-		                	Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
 		                	wifiManager.enableNetwork(netId, true);
-		                }
-	                }
-	            }
+		           }
+                }
             }
         }
     }
