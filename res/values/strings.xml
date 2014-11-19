@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Wifi</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Configurações</string>
     <string name="action_info">Sobre</string>
     <string name="wifiInfo">Wi-fi</string>
@@ -14,11 +13,11 @@
     <string name="wifiSpeed">Velocidade: </string>
     <string name="wifiSecurity">Segurança: </string>
     <string name="wifiAddress">Endereço: </string>
-    <string name="wifiStrength">Força: </string>
+    <string name="wifiStrength">Qualidade: </string>
     <string name="title_activity_lists">Lists</string>
     <string name="title_activity_wifi_info">WifiInfo</string>
-    <string name="title_activity_list_save">ListSave</string>
-    <string name="title_activity_lists__save">Lists_Save</string>
+    <string name="title_activity_list_save">Lista salva</string>
+    <string name="title_activity_lists__save">Lista de wifis disponíveis:</string>
     <string name="title_activity_settings">Settings</string>
     <string name="wifiSettingTime">Tempo para trocar de wi-fi: </string>
     <string name="wifiTimeHint">1</string>

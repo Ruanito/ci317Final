@@ -18,7 +18,6 @@ import android.os.HandlerThread;
 import android.os.IBinder;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 public class WifiDiscoverService extends Service {
 	private final int THRESHOLD_SIGNAL = 10; 
@@ -75,7 +74,7 @@ public class WifiDiscoverService extends Service {
 	
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			Lod.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			Log.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			wifiManager.startScan();
 		}
 	};
@@ -109,11 +108,11 @@ public class WifiDiscoverService extends Service {
                  * does not contain a valid instance of best signal.
                  */
                 if( netId != -1 ) {
-                	Lod.i("dbg", "netId = " + String.valueOf(netId));
+                	Log.i("dbg", "netId = " + String.valueOf(netId));
 	                connected = wifiManager.getConnectionInfo();
 	                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
 	                
-	                Lod.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
 	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
 	                		"; diff=" + String.valueOf(diff));
 	                
@@ -123,8 +122,8 @@ public class WifiDiscoverService extends Service {
 	                
 	                /*
 	                 * Connect to a network only if:
-	                 * 	1 - If ssid are not the same, with diferent ap (mac address).
-	                 * 	2 - Best signal has bigger diference than THRESHOLD_SIGNAL 
+	                 * 	1 - If ssid are not the same, with different ap (mac address).
+	                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
 	                 */
 	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
 	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
