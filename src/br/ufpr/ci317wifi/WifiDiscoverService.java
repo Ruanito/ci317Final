@@ -53,29 +53,29 @@ public class WifiDiscoverService extends Service {
 		
 		if( updateTimer != null ) return Service.START_STICKY;
 		
+		/*
+		 * Register receiver in a different thread, since is asynchronous.
+		 */
 		HandlerThread ht = new HandlerThread("wifiScan");
 		ht.start();
 		Looper looper = ht.getLooper();
 		handler = new Handler(looper);
 		registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
 			
+		// Create timer to trigger in TIMER_TRIGGER in minutes.
 		updateTimer = new Timer("wifidiscover");
 		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*60*1000);		
 		
 		/*
-		 * START_NOT_STICK - Expects service to call stopSelf().
-		 *                   Note this type of return will set
-		 * the service just to restart if there are pending call's
-		 * to startService(... otherwise service will not start.
-		 * This avoid to force android restart the service in the moment
-		 * where there is a contention of resources.
+		 * START_STICK - restart automatically even if android kill it.
+		 * 				 in the later case intent will be null.
 		 */
 	    return Service.START_STICKY;
 	}
 	
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			// Lod.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			Lod.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			wifiManager.startScan();
 		}
 	};
@@ -104,14 +104,18 @@ public class WifiDiscoverService extends Service {
                     }
                 }
                 
+                /*
+                 * If netId is equal -1 means the bestSinal object
+                 * does not contain a valid instance of best signal.
+                 */
                 if( netId != -1 ) {
-                	// Lod.d("dbg", "netId = " + String.valueOf(netId));
+                	Lod.i("dbg", "netId = " + String.valueOf(netId));
 	                connected = wifiManager.getConnectionInfo();
 	                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
 	                
-	                /* Lod.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+	                Lod.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
 	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
-	                		"; diff=" + String.valueOf(diff));*/
+	                		"; diff=" + String.valueOf(diff));
 	                
 	                /* Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
 	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
@@ -119,7 +123,7 @@ public class WifiDiscoverService extends Service {
 	                
 	                /*
 	                 * Connect to a network only if:
-	                 * 	1 - If ssid are not the same, with diferent ap.
+	                 * 	1 - If ssid are not the same, with diferent ap (mac address).
 	                 * 	2 - Best signal has bigger diference than THRESHOLD_SIGNAL 
 	                 */
 	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
@@ -127,7 +131,7 @@ public class WifiDiscoverService extends Service {
 	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) ) {
 	                	
 		                
-		                	// Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
+		                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
 		                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
 		                	// connect to the network with the best signal.
 		                	wifiManager.enableNetwork(netId, true);
