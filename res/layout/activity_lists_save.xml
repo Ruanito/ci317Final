@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="br.ufpr.ci317final.ListSave" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/KownWifis"
+        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+    
+    <ListView
+        android:id="@+id/wifiListSave"
+        style="@style/wifiList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView1" />
+
+</RelativeLayout>
