@@ -9,13 +9,14 @@
     style="@style/list"
     tools:context="br.ufpr.ci317final.Lists" >
     
-    <TextView 
+    <TextView
         android:id="@+id/title"
+        style="@style/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/title"
-        android:gravity="center_horizontal"
-        style="@style/title"
+        android:textAppearance="?android:attr/textAppearanceSmallInverse"
         android:textSize="50sp" />
 
     <ListView

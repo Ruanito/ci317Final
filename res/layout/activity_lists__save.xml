@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@android:color/holo_blue_dark"
         android:text="@string/KownWifis"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
     
     <ListView
         android:id="@+id/wifiListSave"
