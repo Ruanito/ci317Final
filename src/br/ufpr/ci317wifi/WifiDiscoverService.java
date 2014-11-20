@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -20,10 +21,11 @@ import android.os.Looper;
 import android.util.Log;
 
 public class WifiDiscoverService extends Service {
-	private final int THRESHOLD_SIGNAL = 10; 
+	private int THRESHOLD_SIGNAL = 10; 
 	private final int TIMER_TRIGGER = 1;		// time in minutes
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
+	public static final String PREFS_NAME = "MyDiff";
 	
 	@Override
 	public void onCreate() {
@@ -125,6 +127,8 @@ public class WifiDiscoverService extends Service {
 	                 * 	1 - If ssid are not the same, with different ap (mac address).
 	                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
 	                 */
+	                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+	                THRESHOLD_SIGNAL = settings.getInt("diff", 10);
 	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
 	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
 	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) ) {

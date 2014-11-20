@@ -57,12 +57,20 @@ public class WifiInfo extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_info) {
-			intent = new Intent(this, Info.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			return true;
+		
+		switch (id) {
+			case R.id.action_setting:
+				intent = new Intent(this, Settings.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+			case R.id.action_info:
+				intent = new Intent(this, Info.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
 		}
+		
 		return super.onOptionsItemSelected(item);
 	}
 }

@@ -28,8 +28,20 @@ public class Info extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		@SuppressWarnings("unused")
 		int id = item.getItemId();
+		
+		switch (id) {
+			case R.id.action_setting:
+				intent = new Intent(this, Settings.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+			case R.id.action_info:
+				intent = new Intent(this, Info.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
 		
 		return super.onOptionsItemSelected(item);
 	}
