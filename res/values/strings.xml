@@ -25,5 +25,7 @@
     <string name="appInfo">Aplicativo desenvolvido por Alessandro Elias e Ruanito Diego Santos para a disciplina de Tópicos em Sistemas Operacionais, ministrada pelo professor Eduardo Todt.</string>
     <string name="title">Lista de wifi disponíveis:</string>
     <string name="KownWifis">Lista de wifi conhecidos:</string>
+    <string name="textDiff">Diferença de qualidade para trocar de wifi:</string>
+    <string name="buttonDiff">Salvar</string>
 
 </resources>

@@ -7,20 +7,45 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.ufpr.ci317wifi.Settings" >
+    
+    <ScrollView 
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        
+        <RelativeLayout
+            android:id="@+id/wifiRelative"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
 
-   <TextView
-        android:id="@+id/wifiSettingTime"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/wifiSettingTime" />
+            <TextView
+                android:id="@+id/textDiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/textDiff"
+                android:textSize="12sp" />
+            
+            <EditText
+                android:id="@+id/editDiff"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/textDiff"
+                android:inputType="number"
+                android:textSize="12sp" />
+            
+            <Button
+                android:id="@+id/buttonDiff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/editDiff"
+                android:onClick="saveDiff"
+                android:text="@string/buttonDiff"
+                android:textSize="12sp" />
+            
+            </RelativeLayout>
+        
+    </ScrollView>
    
-   <EditText 
-       android:id="@+id/wifiTime"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_toRightOf="@+id/wifiSettingTime"
-       android:textSize="20sp"
-       android:inputType="number" />
-
 </RelativeLayout>

@@ -45,7 +45,15 @@ public class MainWifi extends Activity {
 			startActivity(intent);
 			return true;
 		}
-		return super.onOptionsItemSelected(item);
+		
+		switch (id) {
+			case R.id.action_setting:
+				intent = new Intent(this, Settings.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				break;
+		}
+			return super.onOptionsItemSelected(item);
 	}
 	
 	public void wifiInfo (View view) {

@@ -8,19 +8,29 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="br.ufpr.ci317wifi.Settings" >
 
-   <TextView
-        android:id="@+id/wifiSettingTime"
-        android:layout_width="150dp"
+    <TextView
+        android:id="@+id/textDiff"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="23sp"
-        android:text="@string/wifiSettingTime" />
+        android:text="@string/textDiff"
+        android:textSize="30sp" />
+    
+    <EditText
+        android:id="@+id/editDiff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textDiff"
+        android:inputType="number"
+        android:textSize="30sp" />
+    
+    <Button
+        android:id="@+id/buttonDiff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editDiff"
+        android:layout_alignParentRight="true"
+        android:text="@string/buttonDiff"
+        android:textSize="30sp"
+        android:onClick="saveDiff" />
    
-   <EditText 
-       android:id="@+id/wifiTime"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_toRightOf="@+id/wifiSettingTime"
-       android:textSize="23sp"
-       android:inputType="number" />
-
 </RelativeLayout>

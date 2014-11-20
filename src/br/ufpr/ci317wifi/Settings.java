@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class Settings extends Activity {
 	
@@ -36,5 +37,9 @@ public class Settings extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void saveDiff (View view) {
+		return;
 	}
 }
