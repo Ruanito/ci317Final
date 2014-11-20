@@ -21,12 +21,12 @@
 	        android:layout_centerHorizontal="true" >
 	        
 	   		<Button
-		        android:id="@+id/wifiInfo"
-		        android:layout_width="match_parent"
-		        android:layout_height="300dp"
-		        android:layout_centerHorizontal="true"
-		        android:drawableTop="@drawable/wifi_logo"
-		        android:onClick="wifiInfo" />
+	   		    android:id="@+id/wifiInfo"
+	   		    android:layout_width="match_parent"
+	   		    android:layout_height="300dp"
+	   		    android:layout_centerHorizontal="true"
+	   		    android:drawableTop="@drawable/wifi_logo"
+	   		    android:onClick="wifiInfo" />
 	        
 	        <Button
 		        android:id="@+id/wifiLists"
