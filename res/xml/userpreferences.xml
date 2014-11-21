@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <ListPreference 
-        android:key="PREF_DBM_DIFF"
-        android:title="Diferença de Sinal"
-        android:summary="Conecte a um access point com uma diferença de sinal maior que este."
-        android:entries="@array/signals_dbm_options"
-        android:entryValues="@array/signals_dbm_values"
-        android:dialogTitle="Diferença de Sinal"
-        android:defaultValue="10" />    
+    <PreferenceCategory
+        android:title="Diferença de Sinal" >
+	    <ListPreference
+	        android:key="PREF_DBM_DIFF"
+	        android:title="Sinal"
+	        android:summary="Conecte a um access point com uma diferença de sinal maior que este..."
+	        android:entries="@array/signals_dbm_options"
+	        android:entryValues="@array/signals_dbm_values"
+	        android:dialogTitle="Diferença de Sinal"
+	        android:defaultValue="10" />
+    </PreferenceCategory>
 </PreferenceScreen>

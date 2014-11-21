@@ -20,7 +20,8 @@ import android.os.Looper;
 import android.util.Log;
 
 public class WifiDiscoverService extends Service {
-	private final int THRESHOLD_SIGNAL = 10; 
+	public static int threshold_signal;
+	private final int THRESHOLD_SIGNAL = 10;
 	private final int TIMER_TRIGGER = 1;		// time in minutes
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
@@ -75,7 +76,8 @@ public class WifiDiscoverService extends Service {
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
 			Log.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
-			wifiManager.startScan();
+			Log.d("dbg", "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
+			wifiManager.startScan(); 
 		}
 	};
 		

@@ -2,8 +2,10 @@ package br.ufpr.ci317wifi;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +19,7 @@ public class MainWifi extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_wifi);
 		
+		updateFromPreferences();
 		CreateService();
 	}
 	
@@ -59,8 +62,24 @@ public class MainWifi extends Activity {
 		return false;
 	}
 	
+	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		
+		if( requestCode == SHOW_PREFERENCES )
+			updateFromPreferences();
+	}
+	
+	private void updateFromPreferences() {
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		Resources r = getResources();
+		int i;
+		
+		i = prefs.getInt(FragmentPreferences.PREF_SIGNAL_DIFF, 1);
+		//String[] signal_opt = r.getStringArray(R.array.signals_dbm_options);
+		String[] signal_val = r.getStringArray(R.array.signals_dbm_values);
+		
+		WifiDiscoverService.threshold_signal = Integer.valueOf(signal_val[i]); 
 	}
 	
 	public void wifiInfo (View view) {
