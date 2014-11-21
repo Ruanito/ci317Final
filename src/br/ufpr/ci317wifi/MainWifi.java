@@ -3,6 +3,7 @@ package br.ufpr.ci317wifi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,19 +34,33 @@ public class MainWifi extends Activity {
 		return true;
 	}
 
+	private final int SHOW_PREFERENCES = 1;
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_info) {
-			intent = new Intent(this, Info.class);
-			intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(intent);
-			return true;
+		switch( item.getItemId() ) {
+			case R.id.action_info: {
+				intent = new Intent(this, Info.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+				return true;
+			}
+			case R.id.action_settings: {
+				intent = new Intent(this, FragmentPreferences.class);
+				startActivityForResult(intent, SHOW_PREFERENCES);
+				return true;
+			}
 		}
-		return super.onOptionsItemSelected(item);
+		
+		return false;
+	}
+	
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 	public void wifiInfo (View view) {
