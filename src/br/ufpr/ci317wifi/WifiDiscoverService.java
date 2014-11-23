@@ -9,7 +9,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
@@ -128,8 +127,6 @@ public class WifiDiscoverService extends Service {
 	                 * 	1 - If ssid are not the same, with different ap (mac address).
 	                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
 	                 */
-	                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-	                THRESHOLD_SIGNAL = settings.getInt("diff", 10);
 	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
 	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
 	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > threshold_signal) ) {
