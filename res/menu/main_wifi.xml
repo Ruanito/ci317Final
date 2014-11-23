@@ -9,20 +9,7 @@
         android:title="@string/action_settings" />
     <item
         android:id="@+id/action_info"
-<<<<<<< HEAD
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_info"/>
-    
-    <item
-        android:id="@+id/action_setting"
-        android:orderInCategory="100"
-        android:showAsAction="always"
-        android:title="@string/action_settings" />
-    
-=======
         android:orderInCategory="101"
         android:showAsAction="ifRoom"
         android:title="@string/action_info" />
->>>>>>> preferences
 </menu>

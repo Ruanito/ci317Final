@@ -59,11 +59,6 @@ public class WifiInfo extends Activity {
 		int id = item.getItemId();
 		
 		switch (id) {
-			case R.id.action_setting:
-				intent = new Intent(this, Settings.class);
-				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(intent);
-				break;
 			case R.id.action_info:
 				intent = new Intent(this, Info.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
