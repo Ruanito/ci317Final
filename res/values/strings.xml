@@ -5,8 +5,8 @@
     <string name="action_settings">Configurações</string>
     <string name="action_info">Sobre</string>
     <string name="wifiInfo">Wi-fi</string>
-    <string name="wifiLists">Lista</string>
-    <string name="wifiSave">Conhecidos</string>
+    <string name="wifiLists">Wifi Disponíveis</string>
+    <string name="wifiSave">Wifi Conhecidos</string>
     <string name="wifiName">Nome:</string>
     <string name="wifiQuality">Qualidade:</string>
     <string name="wifiSituation">Situação: </string>

@@ -20,7 +20,7 @@ public class Lists_Save extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lists__save);
+		setContentView(R.layout.activity_lists_save);
 		
 		wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
 	}

@@ -8,7 +8,6 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="20" android:maxSdkVersion="21"/>
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -29,26 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Lists"
-            android:label="@string/title_activity_lists" >
-        </activity>
-        <activity
-            android:name=".Lists_Save"
-            android:label="@string/title_activity_lists__save" >
-        </activity>
-        <activity
-            android:name=".WifiInfo"
-            android:label="@string/title_activity_wifi_info" >
-        </activity>
-        <activity
-            android:name=".Settings"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
-            android:name=".Info"
-            android:label="@string/title_activity_info" >
-        </activity>
+        
+        <activity android:name=".Lists" android:label="@string/title_activity_lists" />
+        <activity android:name=".Lists_Save" android:label="@string/title_activity_lists__save" />
+        <activity android:name=".WifiInfo" android:label="@string/title_activity_wifi_info" />
+        <activity android:name=".Settings" android:label="@string/title_activity_settings" />
+        <activity android:name=".Info" android:label="@string/title_activity_info" />
+        <activity android:name=".FragmentPreferences" />
 
         <service android:enabled="true" android:name=".WifiDiscoverService" />
     </application>
