@@ -20,15 +20,14 @@ import android.os.Looper;
 import android.util.Log;
 
 public class WifiDiscoverService extends Service {
-	public static int threshold_signal;
-	private final int THRESHOLD_SIGNAL = 10;
+	public static int threshold_signal = 10;
 	private final int TIMER_TRIGGER = 1;		// time in minutes
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
 	
 	@Override
 	public void onCreate() {
-		// Lod.d("dbg", "WifiDiscoverService.onCreate threadId=" + String.valueOf(Thread.currentThread().getId()));
+		Log.d(MainWifi.TAG, "WifiDiscoverService.onCreate threadId=" + String.valueOf(Thread.currentThread().getId()));
 		
 		wifiDiscoverReceiver = new WifiDiscoverReceiver();
 		wifiManager = (WifiManager)getSystemService(Service.WIFI_SERVICE);
@@ -49,7 +48,7 @@ public class WifiDiscoverService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		// Lod.d("dbg", "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
+		Log.d(MainWifi.TAG, "WifiDiscoverService.onStartCommand ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		
 		if( updateTimer != null ) return Service.START_STICKY;
 		
@@ -75,8 +74,8 @@ public class WifiDiscoverService extends Service {
 	
 	private TimerTask wifidiscover = new TimerTask() {
 		public void run() {
-			Log.d("dbg", "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
-			Log.d("dbg", "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
+			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
 			wifiManager.startScan(); 
 		}
 	};
@@ -84,7 +83,7 @@ public class WifiDiscoverService extends Service {
     class WifiDiscoverReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-			// Lod.d("dbg", "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
+			// Lod.d(MainWifi.TAG, "WifiDiscoverService$WifiDiscoverReceiver.onReceive ThreadId="+String.valueOf(Thread.currentThread().getId()));
             List<ScanResult> wifiList;
             WifiInfo connected;
             ScanResult bestSignal, next;
@@ -129,7 +128,7 @@ public class WifiDiscoverService extends Service {
 	                 */
 	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
 	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
-	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > THRESHOLD_SIGNAL) ) {
+	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > threshold_signal) ) {
 	                	
 		                
 		                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);

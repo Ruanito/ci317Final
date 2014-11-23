@@ -3,7 +3,7 @@
     <PreferenceCategory
         android:title="Diferença de Sinal" >
 	    <ListPreference
-	        android:key="PREF_DBM_DIFF"
+	        android:key="PREF_SIGNAL_DIFF"
 	        android:title="Sinal"
 	        android:summary="Conecte a um access point com uma diferença de sinal maior que este..."
 	        android:entries="@array/signals_dbm_options"

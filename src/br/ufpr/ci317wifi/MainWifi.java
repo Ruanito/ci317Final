@@ -3,7 +3,6 @@ package br.ufpr.ci317wifi;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -12,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 public class MainWifi extends Activity {
+	public static final String TAG = "dbg";
+	
 	Intent intent;
 	
 	@Override
@@ -24,7 +25,7 @@ public class MainWifi extends Activity {
 	}
 	
 	private void CreateService() {
-		Log.d("dbg", "MainWifi.CreateService ThreadId="+String.valueOf(Thread.currentThread().getId()));
+		Log.d(TAG, "MainWifi.CreateService ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);
 		startService(serviceIntent);
 		
@@ -71,15 +72,15 @@ public class MainWifi extends Activity {
 	}
 	
 	private void updateFromPreferences() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		Resources r = getResources();
-		int i;
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		int signal_diff = -1;
+
+		signal_diff = Integer.valueOf(prefs.getString(FragmentPreferences.PREF_SIGNAL_DIFF, "10"));
+		if( signal_diff == -1 )
+			signal_diff = 10;
 		
-		i = prefs.getInt(FragmentPreferences.PREF_SIGNAL_DIFF, 1);
-		//String[] signal_opt = r.getStringArray(R.array.signals_dbm_options);
-		String[] signal_val = r.getStringArray(R.array.signals_dbm_values);
-		
-		WifiDiscoverService.threshold_signal = Integer.valueOf(signal_val[i]); 
+		Log.i(TAG, "MainWifi.updateFromPreferences signal_diff=" + String.valueOf(signal_diff));
+		WifiDiscoverService.threshold_signal = signal_diff;  
 	}
 	
 	public void wifiInfo (View view) {

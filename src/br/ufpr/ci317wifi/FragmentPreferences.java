@@ -1,10 +1,8 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 
 
 public class FragmentPreferences extends Activity {
