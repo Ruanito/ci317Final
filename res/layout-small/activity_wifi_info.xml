@@ -10,65 +10,98 @@
 
     <TextView
         android:id="@+id/wifiName"
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="end"
         android:text="@string/wifiName"
-        android:textSize="20dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
         android:id="@+id/wifiNameResult"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/wifiName"
         android:layout_toRightOf="@+id/wifiName"
-        android:textSize="20dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/wifiSpeed"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"        
         android:layout_below="@+id/wifiName"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="end"
         android:text="@string/wifiSpeed"
-        android:textSize="20dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
         android:id="@+id/wifiSpeedResult"
-        android:layout_below="@+id/wifiName"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/wifiNameResult"
         android:layout_toRightOf="@+id/wifiSpeed"
-        android:textSize="20dp" />
-
+        android:layout_toEndOf="@+id/wifiSpeed"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/wifiAddress"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"        
         android:layout_below="@+id/wifiSpeed"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="end"
         android:text="@string/wifiAddress"
-        android:textSize="20dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
         android:id="@+id/wifiAddressResult"
-        android:layout_below="@+id/wifiSpeed"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/wifiAddress"
-        android:textSize="16sp" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/wifiSpeedResult"
+        android:layout_toRightOf="@+id/wifiSpeed"
+        android:layout_toEndOf="@+id/wifiSpeed"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <TextView
         android:id="@+id/wifiStrength"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"        
         android:layout_below="@+id/wifiAddress"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:gravity="end"
         android:text="@string/wifiStrength"
-        android:textSize="20dp" />
+        android:textAppearance="?android:attr/textAppearanceMedium" />        
     
     <TextView
         android:id="@+id/wifiStrengthResult"
-        android:layout_below="@+id/wifiAddress"
-        android:layout_width="120dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/wifiAddressResult"
         android:layout_toRightOf="@+id/wifiStrength"
-        android:textSize="20dp" />
+        android:layout_toEndOf="@+id/wifiStrength"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView 
+        android:id="@+id/wifidisabled"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/wifidisabled"
+        android:visibility="gone" />
 
 </RelativeLayout>

@@ -23,7 +23,7 @@ public class MainWifi extends Activity {
 		updateFromPreferences();
 		CreateService();
 	}
-	
+
 	private void CreateService() {
 		Log.d(TAG, "MainWifi.CreateService ThreadId="+String.valueOf(Thread.currentThread().getId()));
 		Intent serviceIntent = new Intent(this, WifiDiscoverService.class);

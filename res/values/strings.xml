@@ -9,11 +9,11 @@
     <string name="wifiSave">Wifi Conhecidos</string>
     <string name="wifiName">Nome:</string>
     <string name="wifiQuality">Qualidade:</string>
-    <string name="wifiSituation">Situação: </string>
-    <string name="wifiSpeed">Velocidade: </string>
-    <string name="wifiSecurity">Segurança: </string>
-    <string name="wifiAddress">Endereço: </string>
-    <string name="wifiStrength">Qualidade: </string>
+    <string name="wifiSituation">Situação:</string>
+    <string name="wifiSpeed">Velocidade:</string>
+    <string name="wifiSecurity">Segurança:</string>
+    <string name="wifiAddress">Endereço:</string>
+    <string name="wifiStrength">Qualidade:</string>
     <string name="title_activity_lists">Lists</string>
     <string name="title_activity_wifi_info">WifiInfo</string>
     <string name="title_activity_list_save">Lista salva</string>
@@ -27,5 +27,6 @@
     <string name="KownWifis">Lista de wifi conhecidos:</string>
     <string name="textDiff">Diferença de qualidade para trocar de wifi:</string>
     <string name="buttonDiff">Salvar</string>
+    <string name="wifidisabled">Wifi desabilidato!</string>
 
 </resources>
