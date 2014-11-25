@@ -59,7 +59,7 @@ public class WifiInfo extends Activity {
 			if( wifiManager.isWifiEnabled() ) {
 				((TextView)findViewById(R.id.wifidisabled)).setVisibility(View.GONE);
 				/* wait for a second, so update can get correct information */
-				try { Thread.sleep(1000); } catch( Exception e) { e.getLocalizedMessage(); };
+				//try { Thread.sleep(1000); } catch( Exception e) { e.getLocalizedMessage(); };
 				updateConnInfo();
 			}else {
 				((TextView)findViewById(R.id.wifidisabled)).setVisibility(View.VISIBLE);

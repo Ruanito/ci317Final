@@ -14,7 +14,7 @@
     <string name="wifiSecurity">Segurança:</string>
     <string name="wifiAddress">Endereço:</string>
     <string name="wifiStrength">Qualidade:</string>
-    <string name="title_activity_lists">Lists</string>
+    <string name="title_activity_lists">Lista</string>
     <string name="title_activity_wifi_info">WifiInfo</string>
     <string name="title_activity_list_save">Lista salva</string>
     <string name="title_activity_lists__save">Lista de wifis disponíveis:</string>
