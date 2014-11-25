@@ -83,7 +83,7 @@ public class WifiDiscoverService extends Service {
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
 
-			Intent intentNotif = new Intent(WifiDiscoverService.this, MainWifi.class);
+			Intent intentNotif = new Intent(WifiDiscoverService.this, WifiInfo.class);
 			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, 0);
 			Notification.Builder builder = new Notification.Builder(WifiDiscoverService.this);
 			builder.setSmallIcon(R.drawable.ic_launcher)

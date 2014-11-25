@@ -24,14 +24,22 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".WifiInfo"
+            android:label="@string/title_activity_wifi_info" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
         <activity android:name=".Lists" android:label="@string/title_activity_lists" />
         <activity android:name=".Lists_Save" android:label="@string/title_activity_lists__save" />
-        <activity android:name=".WifiInfo" android:label="@string/title_activity_wifi_info" />
         <activity android:name=".Settings" android:label="@string/title_activity_settings" />
         <activity android:name=".Info" android:label="@string/title_activity_info" />
         <activity android:name=".FragmentPreferences" />
