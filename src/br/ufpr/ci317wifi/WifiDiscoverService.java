@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.app.NotificationManager;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -25,7 +24,6 @@ public class WifiDiscoverService extends Service {
 	private final int TIMER_TRIGGER = 1;		// time in minutes
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
-	private NotificationManager notifManager = null;
 	
 	@Override
 	public void onCreate() {
@@ -33,7 +31,6 @@ public class WifiDiscoverService extends Service {
 		
 		wifiDiscoverReceiver = new WifiDiscoverReceiver();
 		wifiManager = (WifiManager)getSystemService(Service.WIFI_SERVICE);
-		notifManager = (NotificationManager)getSystemService(Service.NOTIFICATION_SERVICE);
 
 		super.onCreate();
 	}

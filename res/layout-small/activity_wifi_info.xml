@@ -72,36 +72,4 @@
         android:layout_toEndOf="@+id/wifiSpeed"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <TextView
-        android:id="@+id/wifiStrength"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"        
-        android:layout_below="@+id/wifiAddress"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:gravity="end"
-        android:text="@string/wifiStrength"
-        android:textAppearance="?android:attr/textAppearanceMedium" />        
-    
-    <TextView
-        android:id="@+id/wifiStrengthResult"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/wifiAddressResult"
-        android:layout_toRightOf="@+id/wifiStrength"
-        android:layout_toEndOf="@+id/wifiStrength"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-    <TextView 
-        android:id="@+id/wifidisabled"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/wifidisabled"
-        android:visibility="gone" />
-
 </RelativeLayout>

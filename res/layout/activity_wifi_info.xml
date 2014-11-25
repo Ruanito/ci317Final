@@ -94,14 +94,4 @@
         android:layout_toEndOf="@+id/wifiStrength"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     
-    <TextView 
-        android:id="@+id/wifidisabled"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_alignParentBottom="true"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/wifidisabled"
-        android:visibility="gone" />
-
 </RelativeLayout>

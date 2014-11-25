@@ -9,7 +9,6 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +38,7 @@ public class WifiInfo extends Activity {
 		if( wifiManager.isWifiEnabled() ) {
 			updateConnInfo();
 		}else
-			((TextView)findViewById(R.id.wifidisabled)).setVisibility(View.VISIBLE);
+			Toast.makeText(this, "Wifi desabilitado.", Toast.LENGTH_LONG).show();
 	}
 	
 	@Override
@@ -57,12 +56,11 @@ public class WifiInfo extends Activity {
 	class IsWifiEnabled extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
 			if( wifiManager.isWifiEnabled() ) {
-				((TextView)findViewById(R.id.wifidisabled)).setVisibility(View.GONE);
 				/* wait for a second, so update can get correct information */
 				//try { Thread.sleep(1000); } catch( Exception e) { e.getLocalizedMessage(); };
 				updateConnInfo();
 			}else {
-				((TextView)findViewById(R.id.wifidisabled)).setVisibility(View.VISIBLE);
+				Toast.makeText(context, "Wifi desabilitado.", Toast.LENGTH_LONG).show();
 				textViewName.setText("");
 				textViewSpeed.setText("");
 				textViewAddress.setText("");
@@ -70,13 +68,13 @@ public class WifiInfo extends Activity {
 			}
 		}
 	}
-	
+		
 	private void updateConnInfo() {
 		wifiInfo = wifiManager.getConnectionInfo();
 		wifiName = wifiInfo.getSSID();
 		wifiSpeed = wifiInfo.getLinkSpeed();
 		wifiAddress = wifiInfo.getBSSID();
-		wifiStrength = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), 10);
+		wifiStrength = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), 101);
 		
 		String wifiSpeedLink = String.valueOf(wifiSpeed);
 		
@@ -87,7 +85,7 @@ public class WifiInfo extends Activity {
 			textViewName.setText(" " + wifiName);
 			textViewSpeed.setText(" " + wifiSpeedLink + " Mbps");
 			textViewAddress.setText(" " + wifiAddress);
-			textViewStrength.setText(" " + String.valueOf((wifiStrength/10.0) * 100) + "%");
+			textViewStrength.setText(" " + String.valueOf(wifiStrength) + "%");
 		}else 
 			Toast.makeText(this, "Tempo esgotado.", Toast.LENGTH_LONG).show();
 	}
