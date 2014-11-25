@@ -19,7 +19,7 @@ public class Info extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.info, menu);
+		//getMenuInflater().inflate(R.menu.info, menu);
 		return true;
 	}
 
@@ -28,6 +28,7 @@ public class Info extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		/*
 		int id = item.getItemId();
 		
 		switch (id) {
@@ -37,7 +38,7 @@ public class Info extends Activity {
 				startActivity(intent);
 				break;
 		}
-		
+		*/
 		return super.onOptionsItemSelected(item);
 	}
 }
