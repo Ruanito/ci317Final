@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -24,6 +27,7 @@ public class WifiDiscoverService extends Service {
 	private final int TIMER_TRIGGER = 1;		// time in minutes
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
+	private NotificationManager notificationManager = null; 
 	
 	@Override
 	public void onCreate() {
@@ -31,6 +35,7 @@ public class WifiDiscoverService extends Service {
 		
 		wifiDiscoverReceiver = new WifiDiscoverReceiver();
 		wifiManager = (WifiManager)getSystemService(Service.WIFI_SERVICE);
+		notificationManager = (NotificationManager)getSystemService(Service.NOTIFICATION_SERVICE);
 
 		super.onCreate();
 	}
@@ -61,11 +66,10 @@ public class WifiDiscoverService extends Service {
 		Looper looper = ht.getLooper();
 		handler = new Handler(looper);
 		registerReceiver(wifiDiscoverReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION), null, handler);
-		
-			
+					
 		// Create timer to trigger in TIMER_TRIGGER in minutes.
 		updateTimer = new Timer("wifidiscover");
-		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*30*1000);		
+		updateTimer.scheduleAtFixedRate(wifidiscover, 0, TIMER_TRIGGER*60*1000);		
 		
 		/*
 		 * START_STICK - restart automatically even if android kill it.
@@ -78,7 +82,23 @@ public class WifiDiscoverService extends Service {
 		public void run() {
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
-						
+
+			Intent intentNotif = new Intent(WifiDiscoverService.this, MainWifi.class);
+			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, 0);
+			Notification.Builder builder = new Notification.Builder(WifiDiscoverService.this);
+			builder.setSmallIcon(R.drawable.ic_launcher)
+				.setTicker("Wifi conexão")
+				.setContentTitle("Nova conexão")
+				.setContentText("Conectou à ")
+				.setContentInfo("tst")
+				.setContentIntent(pendingIntent)
+				.setAutoCancel(true);
+			
+			@SuppressWarnings("deprecation")
+			Notification notification = builder.getNotification();
+			notificationManager.notify(1, notification);
+			
+			
 			wifiManager.startScan(); 
 		}
 	};
@@ -137,6 +157,21 @@ public class WifiDiscoverService extends Service {
 		                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
 		                	// connect to the network with the best signal.
 		                	wifiManager.enableNetwork(netId, true);
+		                	
+		        			Intent intentNotif = new Intent(WifiDiscoverService.this, WifiInfo.class);
+		        			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, 0);
+		        			Notification.Builder builder = new Notification.Builder(WifiDiscoverService.this);
+		        			builder.setSmallIcon(R.drawable.ic_launcher)
+		        				.setTicker("Wifi conexão")
+		        				.setContentTitle("Nova conexão")
+		        				.setContentText("Conectou à ")
+		        				.setContentInfo(bestSignal.SSID)
+		        				.setContentIntent(pendingIntent)
+		        				.setAutoCancel(true);
+		        			
+		        			@SuppressWarnings("deprecation")
+							Notification notification = builder.getNotification();
+		        			notificationManager.notify(1, notification);
 		           }
                 }
             }
