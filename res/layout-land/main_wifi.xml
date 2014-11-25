@@ -10,15 +10,14 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     tools:context="br.ufpr.ci317final.MainWifi" >
 
-    <Button
+    <ImageButton
         android:id="@+id/wifiInfo"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.8"
-        android:drawableStart="@drawable/wifi_logo_land"
-        android:drawableLeft="@drawable/wifi_logo_land"
-        android:gravity="center_vertical|center_horizontal"
-        android:onClick="wifiInfo" />
+        android:background="@drawable/wifi_logo_land"
+        android:onClick="wifiInfo"
+        android:contentDescription="@string/btn_info_description" />
        
     <Button
            android:id="@+id/wifiLists"

@@ -28,5 +28,6 @@
     <string name="textDiff">Diferença de qualidade para trocar de wifi:</string>
     <string name="buttonDiff">Salvar</string>
     <string name="wifidisabled">Wifi desabilidato!</string>
+    <string name="btn_info_description">obtem info, conexao atual.</string>
 
 </resources>
