@@ -77,10 +77,12 @@ public class Lists extends Activity {
 			List<ScanResult> wifiScanList = wifiManager.getScanResults();
 			
 			wifis = new String[wifiScanList.size()];
-			
+			int s;
+			double qual;
 			for (int i = 0; i < wifiScanList.size(); i++) {
-				String value = String.valueOf(wifiScanList.get(i).level);
-				wifis[i] = "Nome: " + wifiScanList.get(i).SSID + "\nQualidade: " + value;
+				s = WifiManager.calculateSignalLevel(wifiScanList.get(i).level, 10);
+				qual = (s / 10.0) * 100;
+				wifis[i] = "Nome: " + wifiScanList.get(i).SSID + "\nQualidade: " + String.valueOf(qual) + "%";
 			}
 			
 			listView.setAdapter(new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, wifis));
