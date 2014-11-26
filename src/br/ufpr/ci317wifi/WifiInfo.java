@@ -1,6 +1,8 @@
 package br.ufpr.ci317wifi;
 
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class WifiInfo extends Activity {
-	private IsWifiEnabled isWifiEn = null;
+	private WifiStateReceiver wifiStateReceiver = null;
 	private IntentFilter intentFilterWifiState = null;
 	private TextView textViewName, textViewAddress, textViewSpeed, textViewStrength;
 	private WifiManager wifiManager;
@@ -26,13 +28,16 @@ public class WifiInfo extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_wifi_info);
+		
+		NotificationManager nm = (NotificationManager)getSystemService(Service.NOTIFICATION_SERVICE);
+		nm.cancel(WifiDiscoverService.NOTIFICATION_ID);
 
 		textViewName = (TextView) findViewById(R.id.wifiNameResult);
 		textViewSpeed = (TextView) findViewById(R.id.wifiSpeedResult);
 		textViewAddress = (TextView) findViewById(R.id.wifiAddressResult);	
 		textViewStrength = (TextView) findViewById(R.id.wifiStrengthResult);
 		
-		isWifiEn = new IsWifiEnabled();
+		wifiStateReceiver = new WifiStateReceiver();
 		intentFilterWifiState = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
 		wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 		if( wifiManager.isWifiEnabled() ) {
@@ -44,27 +49,30 @@ public class WifiInfo extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		registerReceiver(isWifiEn, intentFilterWifiState);
+		registerReceiver(wifiStateReceiver, intentFilterWifiState);
 	}
 	
 	@Override
 	protected void onPause() {
 		super.onPause();
-		unregisterReceiver(isWifiEn);
+		unregisterReceiver(wifiStateReceiver);
 	}
 	
-	class IsWifiEnabled extends BroadcastReceiver {
+	class WifiStateReceiver extends BroadcastReceiver {
 		public void onReceive(Context context, Intent intent) {
-			if( wifiManager.isWifiEnabled() ) {
-				/* wait for a second, so update can get correct information */
-				//try { Thread.sleep(1000); } catch( Exception e) { e.getLocalizedMessage(); };
-				updateConnInfo();
-			}else {
-				Toast.makeText(context, "Wifi desabilitado.", Toast.LENGTH_LONG).show();
-				textViewName.setText("");
-				textViewSpeed.setText("");
-				textViewAddress.setText("");
-				textViewStrength.setText("");				
+			//Log.i(MainWifi.TAG, "state=" + wifiManager.getWifiState());
+
+			switch( wifiManager.getWifiState() ) {
+				case WifiManager.WIFI_STATE_ENABLED:
+					updateConnInfo();
+					break;
+				case WifiManager.WIFI_STATE_DISABLED:
+					Toast.makeText(WifiInfo.this, "Wifi desabilitado.", Toast.LENGTH_LONG).show();
+				default:
+					textViewName.setText("");
+					textViewSpeed.setText("");
+					textViewAddress.setText("");
+					textViewStrength.setText("");
 			}
 		}
 	}
@@ -82,12 +90,11 @@ public class WifiInfo extends Activity {
 		if( wifiName != null && 
 			wifiAddress != null &&
 			wifiSpeed > 0 && wifiStrength > -200 ) {
-			textViewName.setText(" " + wifiName);
+			textViewName.setText(" " + wifiName.replaceAll("\"", ""));
 			textViewSpeed.setText(" " + wifiSpeedLink + " Mbps");
 			textViewAddress.setText(" " + wifiAddress);
 			textViewStrength.setText(" " + String.valueOf(wifiStrength) + "%");
-		}else 
-			Toast.makeText(this, "Tempo esgotado.", Toast.LENGTH_LONG).show();
+		} 
 	}
 	
 	@Override

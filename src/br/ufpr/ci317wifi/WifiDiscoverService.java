@@ -23,11 +23,13 @@ import android.os.Looper;
 import android.util.Log;
 
 public class WifiDiscoverService extends Service {
-	public static int threshold_signal = 10;
-	private final int TIMER_TRIGGER = 1;		// time in minutes
+	private final int TIMER_TRIGGER = 1;		// time in minutes	
 	private WifiManager wifiManager = null;
 	private WifiDiscoverReceiver wifiDiscoverReceiver = null;
 	private NotificationManager notificationManager = null; 
+
+	public static final int NOTIFICATION_ID = R.string.app_name;
+	public static int threshold_signal = 10;
 	
 	@Override
 	public void onCreate() {
@@ -83,22 +85,6 @@ public class WifiDiscoverService extends Service {
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover ThreadId="+String.valueOf(Thread.currentThread().getId()));
 			Log.d(MainWifi.TAG, "WifiDiscoverService.wifidiscover threshold=" + threshold_signal);
 
-			Intent intentNotif = new Intent(WifiDiscoverService.this, WifiInfo.class);
-			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, 0);
-			Notification.Builder builder = new Notification.Builder(WifiDiscoverService.this);
-			builder.setSmallIcon(R.drawable.ic_launcher)
-				.setTicker("Wifi conexão")
-				.setContentTitle("Nova conexão")
-				.setContentText("Conectou à ")
-				.setContentInfo("tst")
-				.setContentIntent(pendingIntent)
-				.setAutoCancel(true);
-			
-			@SuppressWarnings("deprecation")
-			Notification notification = builder.getNotification();
-			notificationManager.notify(1, notification);
-			
-			
 			wifiManager.startScan(); 
 		}
 	};
@@ -117,63 +103,64 @@ public class WifiDiscoverService extends Service {
             	return;
             
             wifiList = wifiManager.getScanResults();
-            if( wifiList.size() > 0 ) { 
-                bestSignal = wifiList.get(0);
-                for( int i = 1; i < wifiList.size(); i++ ) { 
-                    next = wifiList.get(i);
-                    if( WifiManager.compareSignalLevel(next.level, bestSignal.level) > 0 ) {
-                    	if( (netId = getNetworkId(next.SSID)) != -1 ) 
-                    		bestSignal = next;
-                    }
+            if( wifiList.size() == 0 )
+            	return;
+            
+            bestSignal = wifiList.get(0);
+            for( int i = 1; i < wifiList.size(); i++ ) { 
+                next = wifiList.get(i);
+                if( WifiManager.compareSignalLevel(next.level, bestSignal.level) > 0 ) {
+                	if( (netId = getNetworkId(next.SSID)) != -1 ) 
+                		bestSignal = next;
                 }
+            }
+            
+            /*
+             * If netId is equal -1 means the bestSinal object
+             * does not contain a valid instance of best signal.
+             */
+            if( netId != -1 ) {
+            	Log.i("dbg", "netId = " + String.valueOf(netId));
+                connected = wifiManager.getConnectionInfo();
+                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
+                
+                Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
+                		"; diff=" + String.valueOf(diff));
+                
+                /* Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
+                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
+                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();*/
                 
                 /*
-                 * If netId is equal -1 means the bestSinal object
-                 * does not contain a valid instance of best signal.
+                 * Connect to a network only if:
+                 * 	1 - If ssid are not the same, with different ap (mac address).
+                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
                  */
-                if( netId != -1 ) {
-                	Log.i("dbg", "netId = " + String.valueOf(netId));
-	                connected = wifiManager.getConnectionInfo();
-	                diff = WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi());
-	                
-	                Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
-	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
-	                		"; diff=" + String.valueOf(diff));
-	                
-	                /* Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
-	                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
-	                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();*/
-	                
-	                /*
-	                 * Connect to a network only if:
-	                 * 	1 - If ssid are not the same, with different ap (mac address).
-	                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
-	                 */
-	                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
-	                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
-	                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > threshold_signal) ) {
-	                		//"conectando " + bestSignal.SSID)
-		                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
-		                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
-		                	// connect to the network with the best signal.
-		                	wifiManager.enableNetwork(netId, true);
-		                	
-		        			Intent intentNotif = new Intent(WifiDiscoverService.this, WifiInfo.class);
-		        			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, 0);
+                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
+                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
+                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > threshold_signal) ) {
+                		//"conectando " + bestSignal.SSID)
+	                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
+	                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
+	                	// connect to the network with the best signal.
+	                	if( wifiManager.enableNetwork(netId, true) ) {
+		        			Intent intentNotif = new Intent(WifiDiscoverService.this, br.ufpr.ci317wifi.WifiInfo.class);
+		        			PendingIntent pendingIntent = PendingIntent.getActivity(WifiDiscoverService.this, 0, intentNotif, PendingIntent.FLAG_CANCEL_CURRENT);
 		        			Notification.Builder builder = new Notification.Builder(WifiDiscoverService.this);
 		        			builder.setSmallIcon(R.drawable.ic_launcher)
 		        				.setTicker("Wifi conexão")
 		        				.setContentTitle("Nova conexão")
-		        				.setContentText("Conectou à ")
+		        				.setContentText("Conectado")
 		        				.setContentInfo(bestSignal.SSID)
 		        				.setContentIntent(pendingIntent)
 		        				.setAutoCancel(true);
 		        			
 		        			@SuppressWarnings("deprecation")
 							Notification notification = builder.getNotification();
-		        			notificationManager.notify(1, notification);
-		           }
-                }
+		        			notificationManager.notify(R.string.app_name, notification);
+	                	}
+	           }
             }
         }
     }
