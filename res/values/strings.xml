@@ -29,6 +29,6 @@
     <string name="buttonDiff">Salvar</string>
     <string name="wifidisabled">Wifi desabilidato!</string>
     <string name="btn_info_description">informação da conexão</string>
-    <string name="img_text_empty">a</string>
+    <string name="img_text_empty"></string>
 
 </resources>

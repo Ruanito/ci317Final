@@ -5,7 +5,7 @@
 	    <ListPreference
 	        android:key="PREF_SIGNAL_DIFF"
 	        android:title="Sinal"
-	        android:summary="Qualidade so sinal, para troca de conexão"
+	        android:summary="Qualidade do sinal, para troca de conexão"
 	        android:entries="@array/signals_dbm_options"
 	        android:entryValues="@array/signals_dbm_values"
 	        android:dialogTitle="Diferença de Sinal"

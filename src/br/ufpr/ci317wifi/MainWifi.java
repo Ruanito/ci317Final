@@ -90,7 +90,7 @@ public class MainWifi extends Activity {
 	}
 	
 	public void wifiLists (View view) {
-		intent = new Intent(this, KnownWifiList.class);
+		intent = new Intent(this, AvailableWifis.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}

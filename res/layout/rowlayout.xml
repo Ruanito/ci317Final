@@ -3,17 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-    <TextView 
+    <TextView
         android:id="@+id/ssid"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="6dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="6dp"
         android:layout_marginLeft="6dp"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="my ap bla bla"/>
+        android:layout_marginStart="6dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
     
     <ImageView 
         android:id="@+id/row_icon"
@@ -24,36 +24,36 @@
         android:layout_below="@id/ssid"
         android:layout_marginStart="12dp"
         android:layout_marginLeft="12dp"
+        android:layout_marginTop="6dp"
         android:contentDescription="@string/img_text_empty"
         android:src="@drawable/row_icon" />
     
-    <TextView 
+    <TextView
         android:id="@+id/frequency"
-        android:layout_width="wrap_content"
+        android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/row_icon"
         android:layout_toRightOf="@id/row_icon"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="2.232 Mhz" />
-
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
     <ProgressBar
         android:id="@+id/level"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
-        android:layout_height="12dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginEnd="12dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
+        android:layout_marginStart="12dp"
         android:layout_toEndOf="@id/frequency"
         android:layout_toRightOf="@id/frequency"
-        android:background="#f68400"
-        android:indeterminateOnly="false"
         android:max="100"
         android:progress="50" />
-
+        
 </RelativeLayout>
