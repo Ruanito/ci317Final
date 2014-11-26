@@ -12,14 +12,18 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/title"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25sp"
+        android:textStyle="bold" />
     
     <ListView
         android:id="@+id/wifiList"
+        style="@style/wifiList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title"
-        style="@style/wifiList" >
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:paddingLeft="10dp" >
 
     </ListView>
 

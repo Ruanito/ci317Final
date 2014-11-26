@@ -12,13 +12,16 @@
         android:layout_alignParentTop="true"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/KownWifis"
-        android:textAppearance="?android:attr/textAppearanceSmallInverse" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
     
     <ListView
         android:id="@+id/wifiListSave"
+        style="@style/wifiList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView1"
-        style="@style/wifiList" />
+        android:paddingLeft="10dp" />
 
 </RelativeLayout>

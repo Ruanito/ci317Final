@@ -14,27 +14,33 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="2"
-	    android:scaleType="centerInside"
+	    android:contentDescription="@string/btn_info_description"
 	    android:src="@drawable/wifi_logo"
+	    android:scaleType="fitCenter"
 	    android:onClick="wifiInfo"
-	    android:contentDescription="@string/btn_info_description" />
+	    android:text="@string/btn_info_description"
+	    android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 	   
-	   <Button
+	<Button
 	       android:id="@+id/wifiLists"
 	       android:layout_width="match_parent"
 	       android:layout_height="0dp"
 	       android:layout_weight="1"
+	       android:drawableStart="@drawable/wifi_icon_yellow"
 	       android:drawableLeft="@drawable/wifi_icon_yellow"
 	       android:onClick="wifiLists"
-	       android:text="@string/wifiLists" />
+	       android:text="@string/wifiLists"
+	       android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 	
 	<Button
 	    android:id="@+id/wifiSave"
 	    android:layout_width="match_parent"
 	    android:layout_height="0dp"
 	    android:layout_weight="1"
+	    android:drawableStart="@drawable/wifi_icon_red"
 	    android:drawableLeft="@drawable/wifi_icon_red"
 	    android:onClick="wifiListSave"
-	    android:text="@string/wifiSave" />
+	    android:text="@string/wifiSave"
+	    android:textAppearance="?android:attr/textAppearanceLargeInverse" />
 	
 </LinearLayout>
