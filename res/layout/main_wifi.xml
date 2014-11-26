@@ -17,6 +17,7 @@
 	    android:scaleType="centerInside"
 	    android:src="@drawable/wifi_logo"
 	    android:onClick="wifiInfo"
+	    android:text="@string/img_text_empty"
 	    android:contentDescription="@string/btn_info_description" />
 	   
 	<Button
