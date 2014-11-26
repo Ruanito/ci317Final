@@ -98,6 +98,7 @@ public class WifiDiscoverService extends Service {
             ScanResult bestSignal, next;
             int netId = -1;
             int diff;
+            boolean connect;
     
             if( !wifiManager.isWifiEnabled() )
             	return;
@@ -106,6 +107,9 @@ public class WifiDiscoverService extends Service {
             if( wifiList.size() == 0 )
             	return;
             
+            /*
+             * Find the best signal that is known by the user.
+             */
             bestSignal = wifiList.get(0);
             for( int i = 1; i < wifiList.size(); i++ ) { 
                 next = wifiList.get(i);
@@ -114,7 +118,7 @@ public class WifiDiscoverService extends Service {
                 		bestSignal = next;
                 }
             }
-            
+
             /*
              * If netId is equal -1 means the bestSinal object
              * does not contain a valid instance of best signal.
@@ -127,20 +131,20 @@ public class WifiDiscoverService extends Service {
                 Log.d("dbg", "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
                 		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() + 
                 		"; diff=" + String.valueOf(diff));
-                
-                /* Toast.makeText(getApplicationContext(), "BestSSID: " + bestSignal.SSID + " rssi=" + bestSignal.level + ", BSSID=" + bestSignal.BSSID +
-                		", ConneSSID: " + connected.getSSID() + " rssi=" + connected.getRssi() + ", BSSID=" + connected.getBSSID() +
-                		"; diff=" + String.valueOf(diff), Toast.LENGTH_LONG).show();*/
-                
+                                
                 /*
                  * Connect to a network only if:
-                 * 	1 - If ssid are not the same, with different ap (mac address).
-                 * 	2 - Best signal has bigger difference than THRESHOLD_SIGNAL 
+                 *  if is not connected
+                 * 	If ssid are not the same, with different ap (mac address).
+                 * 	Best signal has bigger difference than threshold_signal var
                  */
-                if( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
-                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) &&
-                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && Math.abs(diff) > threshold_signal) ) {
-                		//"conectando " + bestSignal.SSID)
+                connect = (connected.getSSID().equals("") || connected.getRssi() < -200);
+                connect = connect || 
+                	( (!connected.getSSID().equalsIgnoreCase(bestSignal.SSID) ||
+                	!connected.getBSSID().equalsIgnoreCase(bestSignal.BSSID)) ) &&
+                	(WifiManager.compareSignalLevel(bestSignal.level, connected.getRssi()) > 0 && 
+                	Math.abs(diff) > threshold_signal);
+                if( connect ) {
 	                	Log.i("dbg", "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID);
 	                	// Toast.makeText(getApplicationContext(), "Connecting to: " + bestSignal.SSID + " mac: " + bestSignal.BSSID, Toast.LENGTH_LONG).show();
 	                	// connect to the network with the best signal.
