@@ -36,7 +36,7 @@
             android:theme="@android:style/Theme.Holo" />
         
         <activity
-            android:name=".Lists"
+            android:name=".KnownWifiList"
             android:label="@string/title_activity_lists"
             android:theme="@android:style/Theme.Holo" />
         
