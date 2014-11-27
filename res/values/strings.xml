@@ -14,10 +14,10 @@
     <string name="wifiSecurity">Segurança:</string>
     <string name="wifiAddress">Endereço:</string>
     <string name="wifiStrength">Qualidade:</string>
-    <string name="title_activity_lists">Lista</string>
-    <string name="title_activity_wifi_info">WifiInfo</string>
+    <string name="title_activity_lists">Lista de Wifi disponíveis</string>
+    <string name="title_activity_wifi_info">Conexão Atual</string>
     <string name="title_activity_list_save">Lista salva</string>
-    <string name="title_activity_lists__save">Lista de wifis disponíveis</string>
+    <string name="title_activity_lists__save">Lista de Wifi conhecidos</string>
     <string name="title_activity_settings">Settings</string>
     <string name="wifiSettingTime">Tempo para trocar de wi-fi: </string>
     <string name="wifiTimeHint">1</string>
