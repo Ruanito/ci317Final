@@ -96,7 +96,7 @@ public class MainWifi extends Activity {
 	}
 	
 	public void wifiListSave (View view) {
-		intent = new Intent(this, Lists_Save.class);
+		intent = new Intent(this, KnownWifis.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}

@@ -41,7 +41,7 @@
             android:theme="@android:style/Theme.Holo" />
         
         <activity 
-            android:name=".Lists_Save"
+            android:name=".KnownWifis"
             android:label="@string/title_activity_lists__save"
             android:theme="@android:style/Theme.Holo" />
         

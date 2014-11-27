@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/ssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="6dp"
+        android:text="m3cool"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_below="@+id/ssid"
+        android:layout_marginLeft="12dip"
+        android:layout_marginTop="12dip" />
+
+    <CheckBox
+        android:id="@+id/hidden"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="128dp"
+        android:layout_toRightOf="@id/icon"
+        android:enabled="false"
+        android:gravity="left|center_vertical"
+        android:text="Oculto" />
+
+</RelativeLayout>
